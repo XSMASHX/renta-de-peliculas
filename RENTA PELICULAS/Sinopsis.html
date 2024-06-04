@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Renta de Películas El Pirata</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="main.html">Inicio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Sesión</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Géneros</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="main.html">Todas las Películas</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#!">Fantasía</a></li>
+                            <li><a class="dropdown-item" href="#!">Ficción</a></li>
+                            <li><a class="dropdown-item" href="#!">Animación</a></li>
+                            <li><a class="dropdown-item" href="#!">Aventuras</a></li>
+                            <li><a class="dropdown-item" href="#!">Anime</a></li>
+                            <li><a class="dropdown-item" href="#!">Infantil</a></li>
+                            <li><a class="dropdown-item" href="#!">Acción</a></li>
+                            <li><a class="dropdown-item" href="#!">Guerra</a></li>
+                            <li><a class="dropdown-item" href="#!">Drama</a></li>
+                            <li><a class="dropdown-item" href="#!">Suspenso</a></li>
+                            <li><a class="dropdown-item" href="#!">Terror</a></li>
+                            <li><a class="dropdown-item" href="#!">Historia</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">All Products</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <button class="btn btn-outline-dark" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Peliculas Rentadas
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Product section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center" id="peliculas-container">
+                <div class="col-md-6"><img class="card-img-top" id="imagen-0" src="" alt="Imagen de película" /></div>
+                <div class="col-md-6">
+                    <h1 class="display-5 fw-bolder" id="titulo-0">Cargando...</h1>
+                    <div class="fs-5 mb-5">
+                        <span id="precio-0">$0.00</span>
+                    </div>
+                    <p class="lead" id="descripcion-0">Cargando descripción...</p>
+                    <div class="d-flex">
+                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Related items section-->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="fw-bolder mb-4">Related products</h2>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="related-products">
+                <!-- Aquí se agregarán los bloques de películas relacionadas dinámicamente -->
+            </div>
+        </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script>
+        // Obtener el parámetro 'id' de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const peliculaId = urlParams.get('id');
+
+        if (peliculaId) {
+            // Hacer una solicitud al servidor para obtener los detalles de la película
+            fetch(`detalles_peliculas.php?id=${peliculaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Error:', data.error);
+                    } else {
+                        // Manipular los datos recibidos y agregarlos al DOM
+                        document.getElementById('titulo-0').textContent = data.titulo;
+                        document.getElementById('descripcion-0').textContent = data.descripcion;
+                        document.getElementById('precio-0').textContent = `Q${data.precio}.00`;
+                        document.getElementById('imagen-0').src = data.imagen_ruta;
+                        document.getElementById('imagen-0').alt = `Imagen de ${data.titulo}`;
+                    }
+                })
+                .catch(error => console.error('Error al obtener los detalles:', error));
+
+            // Obtener las películas relacionadas
+            fetch('consulta_peliculas.php')
+                .then(response => response.json())
+                .then(relatedData => {
+                    const relatedProductsContainer = document.getElementById('related-products');
+                    relatedData.forEach(pelicula => {
+                        if (pelicula.id_pelicula != peliculaId) {
+                            const colDiv = document.createElement('div');
+                            colDiv.className = 'col mb-5';
+
+                            const cardDiv = document.createElement('div');
+                            cardDiv.className = 'card h-100';
+
+                            const img = document.createElement('img');
+                            img.className = 'card-img-top';
+                            img.src = pelicula.imagen_ruta;
+                            img.alt = `Imagen de ${pelicula.titulo}`;
+
+                            const cardBodyDiv = document.createElement('div');
+                            cardBodyDiv.className = 'card-body p-4';
+
+                            const textCenterDiv = document.createElement('div');
+                            textCenterDiv.className = 'text-center';
+
+                            const h5 = document.createElement('h5');
+                            h5.className = 'fw-bolder';
+                            h5.textContent = pelicula.titulo;
+
+                            const priceP = document.createElement('p');
+                            priceP.textContent = `Q${pelicula.precio}.00`;
+
+                            const genreP = document.createElement('p');
+                            genreP.textContent = `Género: ${pelicula.genero}`;
+
+                            const cardFooterDiv = document.createElement('div');
+                            cardFooterDiv.className = 'card-footer p-4 pt-0 border-top-0 bg-transparent';
+
+                            const footerTextCenterDiv = document.createElement('div');
+                            footerTextCenterDiv.className = 'text-center';
+
+                            const sinopsisBtn = document.createElement('a');
+                            sinopsisBtn.className = 'btn btn-outline-dark mt-auto';
+                            sinopsisBtn.href = `sinopsis.html?id=${pelicula.id_pelicula}`;
+                            sinopsisBtn.textContent = 'Sinopsis';
+
+                            const rentarBtn = document.createElement('a');
+                            rentarBtn.className = 'btn btn-outline-dark mt-auto ms-0';
+                            rentarBtn.href = '#';
+                            rentarBtn.textContent = 'Rentar';
+
+                            footerTextCenterDiv.appendChild(genreP);
+                            footerTextCenterDiv.appendChild(sinopsisBtn);
+                            footerTextCenterDiv.appendChild(rentarBtn);
+
+                            textCenterDiv.appendChild(h5);
+                            textCenterDiv.appendChild(priceP);
+
+                            cardBodyDiv.appendChild(textCenterDiv);
+                            cardFooterDiv.appendChild(footerTextCenterDiv);
+
+                            cardDiv.appendChild(img);
+                            cardDiv.appendChild(cardBodyDiv);
+                            cardDiv.appendChild(cardFooterDiv);
+
+                            colDiv.appendChild(cardDiv);
+
+                            relatedProductsContainer.appendChild(colDiv);
+                        }
+                    });
+                })
+                .catch(error => console.error('Error al obtener datos:', error));
+        } else {
+            console.error('ID de película no proporcionado en la URL');
+        }
+    </script>
+</body>
+</html>
