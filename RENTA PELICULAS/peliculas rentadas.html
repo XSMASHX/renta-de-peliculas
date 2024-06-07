@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Renta de Películas El Pirata</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="main.html">Inicio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <button id="myListButton" class="btn btn-outline-dark" style="display: none;">Mi Lista</button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#registerModal" id="registerLink">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal" id="loginLink">Iniciar Sesión</a>
+                    </li>
+                </ul>
+                <form class="d-flex" id="logoutForm" style="display: none;">
+                    <button class="btn btn-outline-dark" type="button" id="peliculasRentadasButton">
+                        <i class="bi-cart-fill me-1"></i>
+                        Películas Rentadas
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </button>
+                    <button class="btn btn-outline-dark ms-2" id="logoutButton" type="button">Cerrar Sesión</button>
+                </form>
+                <span id="usuarioActual" style="margin-left: 10px; display: none;"></span>
+            </div>
+        </div>
+    </nav>
+
+<!-- Datos del usuario en la tabla -->
+<div class="container mt-3">
+    <h2>Películas Rentadas</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Género</th>
+                    <th>Precio</th>
+                    <th>Fecha de Alquiler</th>
+                    <th>Fecha de Devolución</th>
+                    <th>Pago de Alquiler</th>
+                    <th>Multa</th>
+                </tr>
+            </thead>
+            <tbody id="tablaPelisRentadas">
+                <!-- Aquí se mostrarán las películas rentadas -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+    <!-- Modal de registro -->
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Registrarse</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registroForm" action="registrar_cliente.php" method="post">
+                        <div class="mb-3">
+                            <label for="inputNombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="inputNombre" name="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputApellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="inputApellido" name="apellido" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputTelefono" class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" id="inputTelefono" name="telefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputCorreo" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="inputCorreo" name="correo_electronico" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputDireccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="inputDireccion" name="direccion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputContraseña" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="inputContraseña" name="contraseña" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de inicio de sesión -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm" action="login_cliente.php" method="post">
+                        <div class="mb-3">
+                            <label for="loginCorreo" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="loginCorreo" name="correo_electronico" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="loginPassword" name="contraseña" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Función para mostrar el mensaje
+        function mostrarMensaje(mensaje, tipo) {
+            const registroResponseContainer = document.getElementById('registroResponseContainer');
+            registroResponseContainer.innerHTML = `<div class="alert alert-${tipo} alert-dismissible fade show" role="alert">${mensaje}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+            registroResponseContainer.style.display = 'block';
+
+            setTimeout(() => {
+                registroResponseContainer.style.display = 'none';
+            }, 5000); // Ocultar el mensaje después de 5 segundos (5000 milisegundos)
+        }
+
+        // Código existente para cargar las películas y manejar el envío del formulario de registro
+        fetch('consulta_peliculas.php')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach((pelicula, index) => {
+                    const peliculaContainer = document.getElementById(`pelicula-${index}`);
+                    const tituloElement = document.getElementById(`titulo-${index}`);
+                    const precioElement = document.getElementById(`precio-${index}`);
+                    const imagenElement = document.getElementById(`imagen-${index}`);
+                    const generoElement = document.getElementById(`genero-${index}`);
+
+                    tituloElement.textContent = pelicula.titulo;
+                    precioElement.textContent = `Q${pelicula.precio}.00`;
+                    imagenElement.src = pelicula.imagen_ruta;
+                    imagenElement.alt = `Imagen de ${pelicula.titulo}`;
+                    generoElement.textContent = `Género: ${pelicula.genero}`;
+
+                    // Agregar el enlace a la página de sinopsis para cada película
+                    const sinopsisElement = document.getElementById(`sinopsis-${index}`);
+                    sinopsisElement.href = `sinopsis.html?id=${pelicula.id_pelicula}`;
+                });
+            })
+            .catch(error => console.error('Error al obtener datos:', error));
+
+         // Ocultar el botón de cerrar sesión al cargar la página
+    $('#logoutForm').hide();
+
+// Agrega una solicitud AJAX para obtener las películas rentadas por el usuario actual
+             // Obtener datos del usuario
+             $.ajax({
+                type: 'GET',
+                url: 'obtener_usuario.php',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('#nombreUsuario').text(response.nombre);
+                        $('#apellidoUsuario').text(response.apellido);
+                        $('#telefonoUsuario').text(response.telefono);
+                        $('#correoUsuario').text(response.correo);
+                        $('#direccionUsuario').text(response.direccion);
+                    } else {
+                        console.error('Datos de usuario incompletos:', response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error al obtener datos del usuario:', error);
+                }
+            });
+
+            // Obtener películas rentadas
+            $.ajax({
+                type: 'GET',
+                url: 'obtener_peliculas_rentadas.php',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        const peliculas = response.peliculas_rentadas;
+                        const tabla = $('#tablaPelisRentadas');
+                        peliculas.forEach((pelicula, index) => {
+                            tabla.append(`
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${pelicula.titulo}</td>
+                                    <td>${pelicula.genero}</td>
+                                    <td>Q${pelicula.precio}.00</td>
+                                    <td>${pelicula.fecha_alquiler}</td>
+                                    <td>${pelicula.fecha_devolucion}</td>
+                                    <td>Q${pelicula.pago_alquiler}.00</td>
+                                    <td>Q${pelicula.multa}.00</td>
+                                </tr>
+                            `);
+                        });
+                    } else {
+                        $('#tablaPelisRentadas').append('<tr><td colspan="8">' + response.message + '</td></tr>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error al obtener películas rentadas:', error);
+                }
+            });
+        });
+    // Función para actualizar el número de películas rentadas
+    function actualizarPeliculasRentadas() {
+            $.ajax({
+                type: 'GET',
+                url: 'contar_peliculas_rentadas.php',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('.badge.bg-dark.text-white.ms-1.rounded-pill').text(response.total_peliculas);
+                    } else {
+                        console.error('Error al contar las películas rentadas:', response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error en la solicitud AJAX:', error);
+                }
+            });
+        }
+
+    // Llamar a la función para actualizar el número de películas rentadas al cargar la página
+    actualizarPeliculasRentadas();
+    // Manejar el evento de inicio de sesión
+    $('#loginForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#loginResponseContainer').html('<div class="alert alert-success" role="alert">' + response.message + '</div>');
+                    $('#loginModal').modal('hide');
+                    setTimeout(function() {
+                        $('#loginResponseContainer').fadeOut('slow');
+                    }, 3000);
+                    $('#usuarioActual').text('Bienvenido, ' + response.nombre_usuario);
+                    $('#usuarioActual').show();
+                    $('#genresDropdown').show();
+                    $('#myListButton').show();
+                    $('#registerLink').hide();
+                    $('#loginLink').hide();
+                    $('#logoutForm').show(); // Mostrar el botón de cerrar sesión después de iniciar sesión
+
+                    // Redirigir a la página especificada después de iniciar sesión
+                    if (response.redirect) {
+                        window.location.href = response.redirect;
+                    }
+                } else {
+                    $('#loginResponseContainer').html('<div class="alert alert-danger" role="alert">' + response.message + '</div>');
+                }
+            },
+            error: function(xhr, status, error) {
+                if (xhr.status === 401) {
+                    $('#loginResponseContainer').html('<div class="alert alert-danger" role="alert">Correo electrónico o contraseña incorrectos</div>');
+                } else {
+                    $('#loginResponseContainer').html('<div class="alert alert-danger" role="alert">Error en el servidor. Por favor, inténtalo de nuevo más tarde.</div>');
+                }
+            }
+        });
+    });
+
+    // Manejar el evento de clic para cerrar sesión
+    $('#logoutButton').click(function() {
+        $.ajax({
+            type: 'POST',
+            url: 'cerrar_sesion.php',
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Redirigir a la página de inicio después de cerrar sesión
+                    window.location.href = 'main.html';
+                }
+            },
+            error: function(xhr, status, error) {
+                // Manejar errores de cierre de sesión
+                console.error('Error al cerrar sesión:', error);
+            }
+        });
+    });
+
+    // Manejar el envío del formulario de registro
+    $('#registroForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            success: function(response) {
+                $('#registroResponseContainer').html('<div class="alert alert-success" role="alert">' + response + '</div>');
+                $('#registerModal').modal('hide'); // Cerrar el modal después de mostrar el mensaje de éxito
+                setTimeout(function() {
+                    $('#registroResponseContainer').fadeOut('slow');
+                }, 3000); // Desaparece después de 3 segundos
+            },
+            error: function(xhr, status, error) {
+                $('#registroResponseContainer').html('<div class="alert alert-danger" role="alert">' + xhr.responseText + '</div>');
+            }
+        });
+    });
+// Parte del código en main.js para manejar el evento de alquiler de películas
+$('#alquilarPeliculaButton').click(function() {
+// Obtener el id del cliente y el no_ejemplar de la película seleccionada
+var id_cliente = obtenerIdCliente(); // Esta función debería obtener el id del cliente actual
+var no_ejemplar = obtenerNoEjemplarSeleccionado(); // Esta función debería obtener el no_ejemplar de la película seleccionada
+
+// Realizar la solicitud AJAX para realizar el alquiler
+$.ajax({
+    type: 'POST',
+    url: 'realizar_alquiler.php',
+    data: { id_cliente: id_cliente, no_ejemplar: no_ejemplar },
+    success: function(response) {
+        alert(response); // Mostrar mensaje de éxito o error
+        // Actualizar la tabla de películas rentadas (si es necesario)
+        // ...
+    },
+    error: function(xhr, status, error) {
+        console.error('Error al realizar alquiler:', error);
+    }
+});
+});
+// Manejar el evento de clic para redirigir a la página de películas rentadas
+$('#peliculasRentadasButton').click(function() {
+// Redirigir a la página de películas rentadas
+window.location.href = 'peliculas rentadas.html';
+});
+// Manejar el evento de clic para redirigir a la página "Mi Lista"
+$('#myListButton').click(function() {
+                window.location.href = 'Mi Lista.html';
+            });
+
+</script>
+</body>
+</html>
